@@ -1,5 +1,10 @@
-<h1>確認</h1>
-<table>
-  {{ userForm.as_table }}
-</table>
- {% csrf_token %}
+{% extends 'myApp/base.html' %}
+{% block title %}新規登録{% endblock %}
+{% block content %}
+<h1>新規登録</h1>
+<div class="center">
+  <p>登録完了！</p>
+  <p>ログインしてお楽しみください<p>
+    <a href='{% url "new_register" %}' class="btn">ログイン</a>
+</div>
+{% endblock %}
