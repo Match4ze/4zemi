@@ -14,11 +14,15 @@ urlpatterns = [
     #ユーザの登録フォームを呼び出す
     path('create', views.showCreateUserForm, name='showCreateForm'),
     #ユーザ登録完了
-    path('create_check', views.CreateCheck, name='create_check'),
+    path('create_completion', views.create_completion, name='create_completion'),
     #ユーザ情報
     path('showUsers', views.showUsers, name='showUsers'),
     #ユーザ登録する処理を呼び出す
     path('add', views.addUser, name='addUser'),
+    #ユーザ情報編集
+    path('<int:id>/edit', views.showEditUserForm, name='showEditUserForm'),
+    #ログイン
+    path('login_user', views.login_user, name='login_user'),
     
 ]
 if settings.DEBUG:

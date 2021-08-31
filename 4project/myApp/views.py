@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .forms import UserForm
+from .forms import LoginForm
 from django.views.generic import CreateView, UpdateView
 
 #ページが存在すれば表示、しなければ404エラー
@@ -17,6 +18,9 @@ def topScreen(request):
 
 def details_screen(request):
     return render(request, 'myApp/details-screen.html', {})
+
+def create_completion(request):
+    return render(request, 'myApp/create_completion.html', {})
 
 #ユーザ情報を辞書に格納して、users.htmlに返す
 def showUsers(request):
@@ -49,17 +53,22 @@ def showCreateUserForm(request):
 def addUser(request):
     #リクエストがPOSTの場合
     if request.method == 'POST':
-        userForm = UserForm(request.POST, request.FILES)
+        userForm = UserForm(request.POST,request.FILES)
         if userForm.is_valid():
             userForm.save()
-            #登録後、全件データを抽出
-        userinfo = login.objects.all()
-        context = {
-            'msg':'ユーザ数',
-            'userinfo': userinfo,
-            'count':userinfo.count,
-        }
-    return render(request, 'myApp/create_check.html', context)
+            
+    return render(request, 'myApp/create_completion.html')
 
-def CreateCheck(request):
-    return render(request, 'myApp/create_check.html', {})
+def showEditUserForm(request, id):
+    userinfo = get_object_or_404(login, pk=id)
+    userForm = UserForm(instance=login)
+
+    context = {
+        'login':login,
+        'userForm':userForm,
+    }
+    return render(request, 'myApp/user_edit.html', context)
+
+def login_user(request):
+    return render(request, 'myApp/login_user.html', {})
+

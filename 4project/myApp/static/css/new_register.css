@@ -1,23 +1,19 @@
-.img{
-    width: 200px;
-    height: 200px;
-    object-fit: cover; 
-    border-radius:50%;
-    margin: 20px 0;
-}
 h1 {
     text-align: center;
     padding: 20px 0;
 }
-.contents {
-    margin: 0 auto;
+.create-frame {
+    margin: auto;
+    padding: 50px;
     width:700px;
     border:solid;
+    text-align: center;
 }
-.box{
-    margin: 0 auto;
-    width:520px;
-    padding: 40px;
+.create-box{
+    display: inline-block;
+    width: 480px;
+    padding:20px;
+    vertical-align: middle;
 }
 
 .create-p {
@@ -29,30 +25,39 @@ h1 {
 
 .btn {
     margin: 40px 10px;
-  color: #000;
-  background-color: #b0c4de;
-  border-bottom: 5px solid #a1b4cc;
+    color: #000;
+    background-color: #b0c4de;
+    border-bottom: 5px solid #a1b4cc;
 }
 
 .btn:hover {
-  margin-top: 43px;
-  color: #000;
-  background: # fff20a;
-  border-bottom: 2px solid #a1b4cc;
+    margin-top: 43px;
+    color: #000;
+    background: # fff20a;
+    border-bottom: 2px solid #a1b4cc;
 }
 
 
-/*detail*/
+/* detail */
+.img{
+    width: 200px;
+    height: 200px;
+    object-fit: cover; 
+    border-radius:50%;
+    margin: 20px 0;
+}
+
 .detail-content {
-    margin: 0 auto;
-    display: flex;
-    flex-wrap: wrap;
+    border: solid;
+    padding: 30px;
+    margin: auto;
     width:700px;
-    border:solid;
+    text-align: center;
 }
 .detail-box {
-    width:320px;
-    padding: 40px;
+    display: inline-block;
+    padding:20px;
+    vertical-align: middle;
 }
 
 /*user*/
@@ -61,14 +66,11 @@ h1 {
     width:350px;
     padding: 0px;
 }
-/*
-.user-table table, .user-table tr, .user-table th{
-    border: 1px solid;
-    border-collapse: collapse;
-}
-*/
 .user-table{
     border: solid;
     padding:5px 5px 5px 20px;
     border-collapse: collapse;
+}
+.user-table tr td {
+    padding: 3px;
 }
