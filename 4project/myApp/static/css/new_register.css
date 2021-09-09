@@ -29,10 +29,17 @@ h1 {
 }
 .create-box {
     display: inline-block;
-    width: 480px;
+    width: 630px;
     padding:20px;
     vertical-align: middle;
 }
+.create-box td {
+    padding:10px;
+}
+.username_note {
+    font-size:2px;
+}
+
 /* users.html */
 .users-table {
     border-collapse: collapse;
@@ -60,4 +67,22 @@ h1 {
     display: inline-block;
     padding:20px;
     vertical-align: middle;
+}
+
+/* Login */
+div.reg{
+  background-color: #EEEEEE;
+  margin-left: 15%;
+  margin-right: 15%;
+}
+
+.message{
+  text-align: right;
+  margin-right:20%;
+}
+
+table.reg_form{
+  width: 100%;
+  border-spacing: 10px 30px;
+  padding-left:20px;
 }
