@@ -61,5 +61,9 @@
 	</div>
       </div>
     </div>
+    <p> ログアウトは
+ <a href="{% url 'Logout' %}">こちら</a>
+    </p>
+    <p>ユーザー情報更新 <a href="{% url 'user_update' user.id|add:"-1" %}">こちら</a></p>
   </body>
 </html>

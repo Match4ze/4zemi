@@ -11,23 +11,22 @@ h1 {
 }
 .create-box{
     display: inline-block;
-    width: 480px;
+    width: 630px;
     padding:20px;
     vertical-align: middle;
 }
 
-.create-p {
-    margin-top:6px;
+.create-box td {
+    padding:10px;
 }
-.center {
-    text-align:center;
+.username_note {
+    font-size:2px;
 }
 
-.btn {
-    margin: 40px 10px;
-    color: #000;
-    background-color: #b0c4de;
-    border-bottom: 5px solid #a1b4cc;
+/* users.html */
+.users-table {
+    border-collapse: collapse;
+    margin: auto;
 }
 
 .btn:hover {
