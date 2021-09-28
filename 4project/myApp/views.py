@@ -4,6 +4,8 @@ from django.views.generic import TemplateView
 from .forms import UserForm
 from .forms import LoginForm
 from .forms import AddUserForm
+from .forms import UserDetailForm
+from .forms import SelectHobby
 
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
@@ -13,6 +15,7 @@ from django.contrib.auth.decorators import login_required
 #ページが存在すれば表示、しなければ404エラー
 from django.shortcuts import get_object_or_404
 from .models import login
+from .models import UserDetail
 
 # Create your views here.
 
@@ -35,7 +38,11 @@ def personal(request):
 
 #趣味診断
 def selectHobby(request):
-    return render(request, 'myApp/selectHobby.html', {})
+    favorite_hobby = SelectHobby()
+    context = {
+        'favorite_hobby':favorite_hobby,
+        }
+    return render(request, 'myApp/selectHobby.html', context)
 
 #ユーザ情報を辞書に格納して、users.htmlに返す
 def showUsers(request):
@@ -62,7 +69,6 @@ def showCreateUserForm(request):
         "AccountCreate":False,
         "account_form":UserForm(),
         "add_account_form":AddUserForm(),
-        "retry":False,
     }
     params["account_form"] = UserForm()
     params["add_account_form"] = AddUserForm()
@@ -157,6 +163,79 @@ def updateUser(request,id):
     return render(request, 'myApp/new_register.html')
 
 
+def showUserDetail(request, id):
+    userinfo = get_object_or_404(login, pk=id)
+    #フォームを変数にセット
+    params = {
+        "userinfo":userinfo,
+        "account_form":UserForm(),
+        "add_account_form":AddUserForm(),
+        "user_detail_form":UserDetailForm(),
+    }
+    params["account_form"] = UserForm()
+    params["add_account_form"] = AddUserForm()
+    params["user_detail_form"] = UserDetailForm()
+    return render(request, "myApp/user_adddetail.html", context=params)
+
+def addUserDetail(request ,id):
+    userinfo = get_object_or_404(login, pk=id)
+    params = {
+        "userinfo":userinfo,
+        "account_form":UserForm(),
+        "add_account_form":AddUserForm(),
+        "user_detail_form":UserDetailForm(),
+    }
+    if request.method == 'POST':
+        userDetailForm = UserDetailForm(request.POST, request.FILES)
+        if  userDetailForm.is_valid():
+            userDetailPost = userDetailForm.save(commit=False)
+            userDetailPost.login_user = userinfo
+            userDetailPost.save()
+
+
+        else:
+            #フォームが有効でない場合
+            print(userDetailForm.errors)
+            return render(request, 'myApp/user_adddetail.html', context=params)
+        
+    return render(request, 'myApp/create_completion.html')
+
+def showMypage(request,id):
+    userinfo = get_object_or_404(login, pk=id)
+    userinfoMypage = get_object_or_404(UserDetail, pk=id)
     
+    context = {
+        'userinfo':userinfo,
+        'userinfoMypage':userinfoMypage
+    }
+    return render(request, 'myApp/mypage.html', context)
     
 
+def MypageUpdate(request, id):
+    userinfoMypage = get_object_or_404(UserDetail, pk=id)
+    user_detail_form = UserDetailForm(instance=userinfoMypage)
+    context = {
+        'userinfoMypage':userinfoMypage,
+        'user_detail_form':user_detail_form,
+    }
+    return render(request, 'myApp/mypage_update.html',context)
+
+def updateMypage(request,id):
+    if request.method == 'POST':
+        userinfoMypage = get_object_or_404(UserDetail,pk=id)
+        user_detail_form = UserDetailForm(request.POST, request.FILES, instance=userinfoMypage)
+        if user_detail_form.is_valid():
+            user_detail_form.save()
+
+
+    userinfo = get_object_or_404(login, pk=id)      
+    context = {
+        'userinfo':userinfo,
+        'userinfoMypage':userinfoMypage
+    }
+    
+<<<<<<< HEAD
+
+=======
+    return render(request, 'myApp/mypage.html', context)
+>>>>>>> cf44ed799e28b87fa0cb8405fb338f683ae73f5e

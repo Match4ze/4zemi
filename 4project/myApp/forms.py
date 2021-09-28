@@ -1,5 +1,7 @@
 from django import forms
 from .models import login
+from .models import UserDetail
+from .models import hobby
 from django.contrib.auth.forms import AuthenticationForm
 from django.forms import ModelForm
 from django.contrib.auth.models import User
@@ -56,3 +58,43 @@ class AddUserForm(forms.ModelForm):
 class LoginForm(forms.Form):
     username = forms.CharField()
     password = forms.CharField()
+
+    
+class UserDetailForm(forms.ModelForm):
+   class Meta():
+      model = UserDetail
+      fields = (
+         'photo1',
+         'photo2',
+         'photo3',
+         'photo4',
+         'photo5',
+         'photo6',
+         'heart',
+         'profile_text',
+      )
+      labels = {
+         'photo1':'画像1',
+         'photo2':'画像2',
+         'photo3':'画像3',
+         'photo4':'画像4',
+         'photo5':'画像5',
+         'photo6':'画像6',
+         'heart':'いいね',
+         'profile_text':'プロフィール',
+      }
+         
+class SelectHobby(forms.ModelForm):
+   class Meta():
+      model = hobby
+
+      fields = (
+         'hobby1',
+         'hobby2',
+         'hobby3',
+      )
+      labels = {
+         'hobby1':'1番好きな趣味*',
+         'hobby2':'2番目に好きな趣味',
+         'hobby3':'3番目に好きな趣味',
+      }

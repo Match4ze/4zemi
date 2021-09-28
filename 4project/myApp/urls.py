@@ -33,13 +33,27 @@ urlpatterns = [
     path("<int:id>/user_update",views.UserUpdate, name='user_update'),
     #ユーザ情報更新
     path('<int:id>/updateUser', views.updateUser, name='updateUser'),
+<<<<<<< HEAD
     
 <<<<<<< HEAD
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 =======
+=======
+    #マイページ登録画面を呼び出す
+    path('<int:id>/user_adddetail', views.showUserDetail, name='user_adddetail'),
+    #マイページ登録
+    path('<int:id>/add_userdetail', views.addUserDetail, name='add_userdetail'),
+    #マイページ更新画面を呼び出す
+    path("<int:id>/mypage_update",views.MypageUpdate, name='Mypage_update'),
+    #マイページ更新
+    path('<int:id>/updateMypage', views.updateMypage, name='updateMypage'),
+    #マイページ
+    path('<int:id>/Mypage', views.showMypage, name='Mypage'),
+>>>>>>> cf44ed799e28b87fa0cb8405fb338f683ae73f5e
     #趣味選択画面
     path('selectHobby', views.selectHobby, name='selectHobby'),
+    
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 >>>>>>> origin/master

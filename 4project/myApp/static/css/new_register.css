@@ -59,6 +59,7 @@ h1 {
     vertical-align: middle;
 }
 
+<<<<<<< HEAD
 /*user*/
 .user-box {
     margin: 0 auto;
@@ -73,3 +74,16 @@ h1 {
 .user-table tr td {
     padding: 3px;
 }
+=======
+
+/* Mypage */
+.Mypage-box {
+     display: inline-block;
+}
+.Mypage_img {
+    width:150px;
+    height:180px;
+    object-fit:cover;
+}
+    
+>>>>>>> cf44ed799e28b87fa0cb8405fb338f683ae73f5e
