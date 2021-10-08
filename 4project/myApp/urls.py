@@ -15,7 +15,7 @@ urlpatterns = [
     path('details_screen', views.details_screen, name='details_screen'),
      #性格診断
     path('<int:id>/personal', views.personal_view, name='personal'),
-    path('<int:id>personal2', views.personal2, name='personal2'),
+    path('<int:id>/personal2', views.personal2, name='personal2'),
     path('<int:id>/select', views.select, name='select'),
     
     #ユーザの詳細情報を表示する処理を呼び出す
@@ -36,6 +36,7 @@ urlpatterns = [
     path("<int:id>/user_update",views.UserUpdate, name='user_update'),
     #ユーザ情報更新
     path('<int:id>/updateUser', views.updateUser, name='updateUser'),
+
     #マイページ登録画面を呼び出す
     path('<int:id>/user_adddetail', views.showUserDetail, name='user_adddetail'),
     #マイページ登録
@@ -46,7 +47,8 @@ urlpatterns = [
     path('<int:id>/updateMypage', views.updateMypage, name='updateMypage'),
     #マイページ
     path('<int:id>/Mypage', views.showMypage, name='Mypage'),
-
+    #趣味選択画面
+    path('selectHobby', views.selectHobby, name='selectHobby'),
     #趣味選択フォームを呼び出す
     path('<int:id>/show_selectHobby', views.showSelectHobby, name='show_selectHobby'),
     #趣味選択
@@ -55,7 +57,6 @@ urlpatterns = [
     path('<int:id>/selectHobby_update', views.showUpdateSelectHobby, name='selectHobby_update'),
     #趣味選択の更新
     path('<int:id>/updateSelectHobby', views.updateSelectHobby, name='updateSelectHobby'),    
-
     #退会確認
     path('<int:id>/userCheckDelete', views.UserCheckDelete, name='userCheckDelete'),
     #退会

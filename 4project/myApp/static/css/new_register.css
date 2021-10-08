@@ -1,38 +1,25 @@
-/* 共通 */
 h1 {
-     text-align: center;
+    text-align: center;
+    padding: 20px 0;
 }
-.center {
-     text-align: center;
-}
-.btn {
-    margin: 30px 8px;;
-    color: #000;
-    background-color: #b0c4de;
-    border-bottom: 5px solid #8d9eb3;
-}
-
-.btn:hover {
-    margin-top: 33px;
-    color: #000;
-    background: #b0c4de;
-    border-bottom: 2px solid #8d9eb3;
-}
-
-/* create.html */
 .create-frame {
-    border: solid;
-    padding: 50px;
     margin: auto;
+<<<<<<< HEAD
+    padding: 50px;
+    width:700px;
+    border:solid;
+=======
     width:750px;
+>>>>>>> d0dde079d8a48a9a6cef0f3fcd1ece3e8f233eed
     text-align: center;
 }
-.create-box {
+.create-box{
     display: inline-block;
     width: 700px;
     padding:20px;
     vertical-align: middle;
 }
+
 .create-box td {
     padding:10px;
 }
@@ -45,20 +32,27 @@ h1 {
     border-collapse: collapse;
     margin: auto;
 }
-.users-table tr td {
-    border: solid 1px;
-   padding: 5px;
+
+.btn:hover {
+    margin-top: 43px;
+    color: #000;
+    background: # fff20a;
+    border-bottom: 2px solid #a1b4cc;
 }
-/* detail.html */
-.image {
-    width:200px;
-    height:200px;
-    object-fit:cover;
+
+
+/* detail */
+.img{
+    width: 200px;
+    height: 200px;
+    object-fit: cover; 
     border-radius:50%;
+    margin: 20px 0;
 }
-.detail-frame {
+
+.detail-content {
     border: solid;
-    padding: 50px;
+    padding: 30px;
     margin: auto;
     width:700px;
     text-align: center;
@@ -69,6 +63,22 @@ h1 {
     vertical-align: middle;
 }
 
+<<<<<<< HEAD
+/*user*/
+.user-box {
+    margin: 0 auto;
+    width:350px;
+    padding: 0px;
+}
+.user-table{
+    border: solid;
+    padding:5px 5px 5px 20px;
+    border-collapse: collapse;
+}
+.user-table tr td {
+    padding: 3px;
+}
+=======
 
 /* Mypage */
 .Mypage-box {
@@ -80,3 +90,4 @@ h1 {
     object-fit:cover;
 }
     
+>>>>>>> cf44ed799e28b87fa0cb8405fb338f683ae73f5e
