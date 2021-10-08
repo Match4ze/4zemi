@@ -33,8 +33,16 @@ class hobby(models.Model):
    hobby3=models.CharField(max_length=5, choices=[('スポーツ','スポーツ'),('読書','読書'),('旅行','旅行'),('カメラ','カメラ'),('映画鑑賞','映画鑑賞')], null=True, blank=True)
 
    def __str__(self):
+<<<<<<< HEAD
+<<<<<<< HEAD
+        return self.hobby
+
+=======
+      return self.hobby
+=======
       return self.login_user.user.username
    
+>>>>>>> efbb9569c11cd0fa7134ba71ab58703c30595dc8
 
 class UserDetail(models.Model):
    #外部キー
@@ -51,6 +59,9 @@ class UserDetail(models.Model):
    def __str__(self):
         return self.login_user.user.username
    
+<<<<<<< HEAD
+>>>>>>> cf44ed799e28b87fa0cb8405fb338f683ae73f5e
+=======
 
 class question(models.Model):
    
@@ -67,7 +78,7 @@ class question(models.Model):
    q10 = models.IntegerField(null=False,blank=False)
    def __str__(self):
         return self.user.user.username
-   def save(self, force_insert=False, force_update=False):
+   def publish(self):
         self.save()
 
 class personal(models.Model):
@@ -81,6 +92,7 @@ class personal(models.Model):
    def __str__(self):
         return self.user.user.username
      
-   def save(self):
+   def publish(self):
       self.save()
    
+>>>>>>> efbb9569c11cd0fa7134ba71ab58703c30595dc8

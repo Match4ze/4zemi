@@ -1,3 +1,9 @@
+<<<<<<< HEAD
+.img{
+     width: 250px;
+  height: 250px;
+  object-fit: cover; /* この一行を追加するだけ！ */
+=======
 /* 共通 */
 h1 {
      text-align: center;
@@ -46,4 +52,5 @@ h1 {
     display: inline-block;
     padding:20px;
     vertical-align: middle;
+>>>>>>> new_branch
 }
