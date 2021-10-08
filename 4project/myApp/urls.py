@@ -5,6 +5,7 @@ from django.conf.urls.static import static
 
 from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import path
+from django.conf.urls import url
 
 
 
@@ -12,8 +13,10 @@ urlpatterns = [
     path('', views.new_register, name='new_register'),
     path('<int:id>/topScreen', views.topScreen, name='topScreen'),
     path('details_screen', views.details_screen, name='details_screen'),
-    path('personal', views.personal, name='personal'),
-    path('select', views.select, name='select'),
+     #性格診断
+    path('<int:id>/personal', views.personal_view, name='personal'),
+    path('<int:id>/personal2', views.personal2, name='personal2'),
+    path('<int:id>/select', views.select, name='select'),
     
     #ユーザの詳細情報を表示する処理を呼び出す
     path('<int:id>', views.showDetail, name='showDetail'),
@@ -33,14 +36,7 @@ urlpatterns = [
     path("<int:id>/user_update",views.UserUpdate, name='user_update'),
     #ユーザ情報更新
     path('<int:id>/updateUser', views.updateUser, name='updateUser'),
-<<<<<<< HEAD
-    
-<<<<<<< HEAD
-]
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-=======
-=======
+
     #マイページ登録画面を呼び出す
     path('<int:id>/user_adddetail', views.showUserDetail, name='user_adddetail'),
     #マイページ登録
@@ -51,13 +47,19 @@ if settings.DEBUG:
     path('<int:id>/updateMypage', views.updateMypage, name='updateMypage'),
     #マイページ
     path('<int:id>/Mypage', views.showMypage, name='Mypage'),
->>>>>>> cf44ed799e28b87fa0cb8405fb338f683ae73f5e
     #趣味選択画面
     path('selectHobby', views.selectHobby, name='selectHobby'),
+    #趣味選択フォームを呼び出す
+    path('<int:id>/show_selectHobby', views.showSelectHobby, name='show_selectHobby'),
+    #趣味選択
+    path('<int:id>/add_selectHobby', views.addSelectHobby, name='add_selectHobby'),
+    #趣味選択を編集するフォームを呼び出す
+    path('<int:id>/selectHobby_update', views.showUpdateSelectHobby, name='selectHobby_update'),
+    #趣味選択の更新
+    path('<int:id>/updateSelectHobby', views.updateSelectHobby, name='updateSelectHobby'),    
     #退会確認
     path('<int:id>/userCheckDelete', views.UserCheckDelete, name='userCheckDelete'),
     #退会
     path('<int:id>/userDelete', views.UserDelete, name='userDelete'),
     
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
->>>>>>> origin/master

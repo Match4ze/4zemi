@@ -4,7 +4,7 @@
 
 <h1>趣味を選択する</h1>
 
-<form method="POST" action='{% url "personal" %}'>
+<form method="post" action='{% url "add_selectHobby" userinfo.id %}' enctype="multipart/form-data" autocomplete="off">
   {% csrf_token %}
   <div class="create-frame">
     <div class="create-box">
