@@ -17,7 +17,10 @@ urlpatterns = [
     path('<int:id>/personal', views.personal_view, name='personal'),
     path('<int:id>/personal2', views.personal2, name='personal2'),
     path('<int:id>/select', views.select, name='select'),
-    
+    #フレンド申請
+    path('<int:id>/friend_request', views.friend_request, name='friend_request'),
+    path('<int:id>/friend_req_list', views.friend_req_list, name='friend_req_list'),
+    path('<int:id>/<int:allow_id>/friend_allow', views.friend_allow, name='friend_allow'),
     #ユーザの詳細情報を表示する処理を呼び出す
     path('<int:id>', views.showDetail, name='showDetail'),
     #ユーザの登録フォームを呼び出す

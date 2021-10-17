@@ -67,9 +67,7 @@ class question(models.Model):
    q10 = models.IntegerField(null=False,blank=False)
    def __str__(self):
         return self.user.user.username
-   def publish(self):
-        self.save()
-
+     
 class personal(models.Model):
    user = models.OneToOneField(login, on_delete=models.CASCADE)
    diplomacy = models.IntegerField(null=False,blank=False);
@@ -83,4 +81,23 @@ class personal(models.Model):
      
    def publish(self):
       self.save()
+      
+class Friend_request(models.Model):
+    user = models.OneToOneField(login, on_delete=models.CASCADE)
+    friend_req = models.TextField(blank=True)
+    def __str__(self):
+        return self.user.user.username
+
+    def publish(self):
+       self.save()
+       
+class Friend_list(models.Model):
+    user = models.OneToOneField(login, on_delete=models.CASCADE)
+    friend_req = models.TextField(blank=True)
+    def __str__(self):
+        return self.user.user.username
+
+    def publish(self):
+       self.save()
+       
    

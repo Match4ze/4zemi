@@ -20,6 +20,8 @@ from .models import UserDetail
 from .models import hobby
 from .models import personal
 from .models import question
+from .models import Friend_request
+from .models import Friend_list
 
 # Create your views here.
 
@@ -40,19 +42,20 @@ def select(request,id):
 #性格診断
 def personal_view(request,id):
     userinfo = get_object_or_404(login, pk=id)
-    if request.method == 'POST':
-        pForm = personalForm(request.POST)
-        if pForm.is_valid():
-            personalPost = pForm.save(commit=False)
-            personalPost.user = userinfo
     params = {
         'title': '性格診断',
         'form':personalForm(),
         'result':None,
         'userinfo':userinfo
     }
+    if request.method == 'POST':
+        pForm = personalForm(request.POST,request.FILES)
+        if pForm.is_valid():
+            personalPost = pForm.save(commit=False)
+            personalPost.user = userinfo
+            personalPost.save()
     return render(request, 'myApp/personal.html', params)
-        
+
 def personal2(request,id):
     userinfo = get_object_or_404(login, pk=id)
     q = question.objects.filter(user=userinfo)
@@ -142,11 +145,16 @@ def Login(request):
         Pass = request.POST.get('password')
 
         user = authenticate(username=ID, password=Pass)
-        userinfo = login.objects.all()
+
+        userinfo = get_object_or_404(login, pk=user.id-1)
+        alluser = login.objects.all()
+        userschool = login.objects.filter(school_name=userinfo.school_name)
        
         context = {
-            'user':user,
             'userinfo':userinfo,
+            'user':user,
+            'alluser':alluser,
+            'userschool':userschool,
         }
 
         if user:
@@ -166,16 +174,20 @@ def Login(request):
 
 
 #ログアウト
-@login_required
 def Logout(request):
     logout(request)
-    return HttpResponseRedirect(reverse('myApp/login_user'))
+    return render(request, 'myApp/login_user.html')
 
 #ログイン後ホーム
 def topScreen(request, id):
     userinfo = get_object_or_404(login, pk=id)
+    alluser = login.objects.all()
+    userschool = login.objects.filter(school_name=userinfo.school_name)
     context = {
-        "user":userinfo.user,
+        'userinfo':userinfo,
+        'user':userinfo.user,
+        'alluser':alluser,
+        'userschool':userschool,
     }
     return render(request, "myApp/topScreen.html",  context)
 
@@ -188,14 +200,31 @@ def UserUpdate(request, id):
     }
     return render(request, 'myApp/user_update.html',context)
 
-def updateUser(request,id):
+def updateUser(request, id):
     if request.method == 'POST':
-        userInfo = get_object_or_404(login,pk=id)
-        userUpdateForm = AddUserForm(request.POST, request.FILES, instance=userInfo)
+        userinfo = get_object_or_404(login,pk=id)
+        userUpdateForm = AddUserForm(request.POST, request.FILES, instance=userinfo)
+
+        context = {
+            'userinfo':userinfo,
+            'userUpdateForm':userUpdateForm,
+        }
+        
         if userUpdateForm.is_valid():
             userUpdateForm.save()
- 
-    return render(request, 'myApp/new_register.html')
+        else:
+            print(userUpdateForm.errors)
+            return(request, 'myApp/user_update.html', context)
+            
+    
+    alluser = login.objects.all()
+    userschool = login.objects.filter(school_name=userinfo.school_name)
+    params = {
+        "user":userinfo.user,
+        'alluser':alluser,
+        'userschool':userschool,
+    }
+    return render(request, "myApp/topScreen.html",  context=params)
 
 def showUserDetail(request, id):
     userinfo = get_object_or_404(login, pk=id)
@@ -371,3 +400,72 @@ def updateSelectHobby(request, id):
     }
     
     return render(request, 'myApp/new_register.html', context)
+
+def friend_request(request,id):
+    
+    return render(request, 'myApp/friend_request.html', {})
+ 
+def friend_req_list(request,id):
+    userinfo = get_object_or_404(login, pk=id)
+    req = Friend_request.objects.filter(user=userinfo)
+    req_list=req[0].friend_req.split(',')#フレンド申請一覧（配列型）
+    alluser = login.objects.all()#全部のユーザー
+    req_friend = []
+    i=0
+    for i in range(len(req_list)):
+        req_friend.append(get_object_or_404(login, pk=req_list[i]))
+        #req_friend.append(login.objects.filter(user=req_list[i]))
+    
+    context = {
+        'req_friend':req_friend,
+        'userinfo':userinfo,
+        'alluser':alluser
+       
+        }
+    return render(request, 'myApp/friend_req_list.html',context)
+
+def friend_allow(request,id,allow_id):
+    userinfo = get_object_or_404(login, pk=id)#許可する側
+    userinfo2 = get_object_or_404(login, pk=allow_id)#許可する側
+    allow_id = allow_id
+
+    
+    #許可した側のフレンド申請から申請した側を削除する
+    req = Friend_request.objects.filter(user=userinfo)
+    req_list=req[0].friend_req.split(',')#許可する側フレンド申請一覧（配列型）
+    req_list.remove(str(allow_id))
+    req_list = ','.join(req_list)
+    Friend_request.objects.filter(user=userinfo).delete()
+    Friend_request.objects.create(user=userinfo,friend_req=req_list)
+    
+    #双方の友達リストにお互いを追加する(許可する側)
+    if(Friend_list.objects.filter(user=userinfo).exists()):
+        list1 = Friend_list.objects.filter(user=userinfo)#許可する側の友達リスト
+        user_f_list = list1[0].friend_req.split(',')
+        user_f_list.append(allow_id)
+        add_f_list = ','.join(str(user_f_list))
+        Friend_list.objects.filter(user=userinfo).delete()
+    else:
+        add_f_list = str(allow_id) + ','
+    Friend_list.objects.create(user=userinfo,friend_req=add_f_list)
+
+     #双方の友達リストにお互いを追加する(申請する側)
+    if(Friend_list.objects.filter(user=userinfo2).exists()):
+        list2 = Friend_list.objects.filter(user=userinfo2)#許可する側の友達リスト
+        user_f_list2 = list2[0].friend_req.split(',')
+        user_f_list2.append(id)
+        add_f_list2 = ','.join(user_f_list2)
+        Frinend_list.objects.filter(user=userinfo2).delete()
+    else:
+        add_f_list2 = str(id) + ','
+    Friend_list.objects.create(user=userinfo2,friend_req=add_f_list2)
+    
+    context = {
+        'userinfo':userinfo,
+        'allow_id':allow_id
+        }
+
+    return render(request, 'myApp/friend_allow.html', context)
+
+
+
