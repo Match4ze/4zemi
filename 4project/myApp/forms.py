@@ -110,7 +110,7 @@ class personalForm(forms.ModelForm):
       model = question
       fields = (
          'q1','q2','q3','q4','q5','q6','q7','q8','q9','q10'
-         )
+      )
       data=[
          ('0', '0'),('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'),
       ]
