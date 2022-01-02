@@ -61,16 +61,17 @@ class UserDetail(models.Model):
 
 class question(models.Model):
    user = models.OneToOneField(login, on_delete=models.CASCADE)
-   q1 = models.IntegerField(null=False,blank=False)
-   q2 = models.IntegerField(null=False,blank=False)
-   q3 = models.IntegerField(null=False,blank=False)
-   q4 = models.IntegerField(null=False,blank=False)
-   q5 = models.IntegerField(null=False,blank=False)
-   q6 = models.IntegerField(null=False,blank=False)
-   q7 = models.IntegerField(null=False,blank=False)
-   q8 = models.IntegerField(null=False,blank=False)
-   q9 = models.IntegerField(null=False,blank=False)
-   q10 = models.IntegerField(null=False,blank=False)
+   CHOICE = ((0,'0'),(1,'1'),(2,'2'),(3,'3'),(4,'4'))
+   q1 = models.IntegerField(null=False,blank=False,choices=CHOICE)
+   q2 = models.IntegerField(null=False,blank=False,choices=CHOICE)
+   q3 = models.IntegerField(null=False,blank=False,choices=CHOICE)
+   q4 = models.IntegerField(null=False,blank=False,choices=CHOICE)
+   q5 = models.IntegerField(null=False,blank=False,choices=CHOICE)
+   q6 = models.IntegerField(null=False,blank=False,choices=CHOICE)
+   q7 = models.IntegerField(null=False,blank=False,choices=CHOICE)
+   q8 = models.IntegerField(null=False,blank=False,choices=CHOICE)
+   q9 = models.IntegerField(null=False,blank=False,choices=CHOICE)
+   q10 = models.IntegerField(null=False,blank=False,choices=CHOICE)
    def __str__(self):
         return self.user.user.username
    def publish(self):
