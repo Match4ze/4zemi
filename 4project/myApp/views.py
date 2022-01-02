@@ -234,7 +234,7 @@ def personal_view(request,id):
         o = 4 - q[0].q10 + q[0].q5
         if(personal.objects.filter(user=userinfo).exists()):
             personal.objects.filter(user=userinfo).delete()
-            per = personal.objects.create(user=userinfo,diplomacy=d,cooperation=c,honesty=h,nerve=n,openness=o)
+        per = personal.objects.create(user=userinfo,diplomacy=d,cooperation=c,honesty=h,nerve=n,openness=o)
     params = {
         'title': '性格診断',
         'form':personalForm(),
@@ -345,7 +345,10 @@ def Login(request):
                 userinfo = get_object_or_404(login, pk=user.id-1)
                 alluser = login.objects.all()
                 user_exclude = login.objects.exclude(id=userinfo.id)
-        
+
+                #ランダム
+                user_exclude_random = user_exclude.order_by('?')[:10]
+    
                 userschool = user_exclude.filter(school_name=userinfo.school_name)
                 userschool_random = userschool.order_by('?')[:10]
 
@@ -366,6 +369,7 @@ def Login(request):
                     #'personaluser':personaluser,
                     'userschool_random':userschool_random,
                     'usermajor_random':usermajor_random,
+                    'user_exclude_random':user_exclude_random,
                 }
 
                 return render(request, 'myApp/topScreen.html', context)
@@ -409,6 +413,9 @@ def topScreen(request, id):
     alluser = login.objects.all()
     user_exclude = login.objects.exclude(id=userinfo.id)
 
+    #ランダム
+    user_exclude_random = user_exclude.order_by('?')[:10]
+
     #性格表示
     #personaluser = personalityRank(request, id)
 
@@ -429,6 +436,7 @@ def topScreen(request, id):
         #'personaluser':personaluser,
         'userschool_random':userschool_random,
         'usermajor_random':usermajor_random,
+        'user_exclude_random':user_exclude_random,
     }
     
     return render(request, "myApp/topScreen.html",  context)
@@ -736,31 +744,52 @@ def updateUser(request, id):
     
     alluser = login.objects.all()
     user_exclude = login.objects.exclude(id=userinfo.id)
-    
+
+    #ランダム
+    user_exclude_random = user_exclude.order_by('?')[:10]
+                
     userschool = user_exclude.filter(school_name=userinfo.school_name)
     userschool_random = userschool.order_by('?')[:10]
     
     usermajor = user_exclude.filter(school_major=userinfo.school_major)
     usermajor_random = usermajor.order_by('?')[:10]
+
+    #趣味表示
+    hobbyRankList = rankHobby(request, userinfo.id)
+
+    #性格表示
+    #personaluser = personalityRank(request, id)
     
     params = {
         'userinfo':userinfo,
         'user':user,
         'alluser':alluser,
+        'hobbyRankList':hobbyRankList,
+        #'personaluser':personaluser,
         'userschool_random':userschool_random,
         'usermajor_random':usermajor_random,
+        'user_exclude_random':user_exclude_random,
     }
 
     return render(request, "myApp/topScreen.html",  context=params)
 
 def showUserDetail(request, id):
     userinfo = get_object_or_404(login, pk=id)
+    global user_pass
+    user_pass = request.session['userpass']
+
+    global user_username
+    user_username = request.session['user_user_name']
+    
+    user = authenticate(username=user_username, password=user_pass)
+    login(request, user)
     #フォームを変数にセット
     params = {
         "userinfo":userinfo,
         "account_form":UserForm(),
         "add_account_form":AddUserForm(),
         "user_detail_form":UserDetailForm(),
+        'user':user,
     }
     params["account_form"] = UserForm()
     params["add_account_form"] = AddUserForm()
@@ -769,11 +798,21 @@ def showUserDetail(request, id):
 
 def addUserDetail(request ,id):
     userinfo = get_object_or_404(login, pk=id)
+    global user_pass
+    user_pass = request.session['userpass']
+
+    global user_username
+    user_username = request.session['user_user_name']
+    
+    user = authenticate(username=user_username, password=user_pass)
+    login(request, user)
+    
     params = {
         "userinfo":userinfo,
         "account_form":UserForm(),
         "add_account_form":AddUserForm(),
         "user_detail_form":UserDetailForm(),
+        'user':user,
     }
     if request.method == 'POST':
         userDetailForm = UserDetailForm(request.POST, request.FILES)
@@ -791,8 +830,9 @@ def addUserDetail(request ,id):
     userdetail = UserDetail.objects.filter(login_user=userinfo)
     userinfoMypage = userdetail[0]
     mypagetext = {
-            'userinfo':userinfo,
-            'userinfoMypage':userinfoMypage
+        'userinfo':userinfo,
+        'userinfoMypage':userinfoMypage,
+        'user':user,
     }
     return render(request, 'myApp/mypage.html', context=mypagetext)
 
@@ -826,7 +866,7 @@ def showMypage(request,id):
         "account_form":UserForm(),
         "add_account_form":AddUserForm(),
         "user_detail_form":UserDetailForm(),
-            'user':user,
+        'user':user,
         }
         params["account_form"] = UserForm()
         params["add_account_form"] = AddUserForm()
@@ -1001,6 +1041,9 @@ def addSelectHobby(request,id):
 
     alluser = login.objects.all()
     user_exclude = login.objects.exclude(id=userinfo.id)
+
+    #ランダム
+    user_exclude_random = user_exclude.order_by('?')[:10]
     
     userschool = user_exclude.filter(school_name=userinfo.school_name)
     userschool_random = userschool.order_by('?')[:10]
@@ -1018,6 +1061,7 @@ def addSelectHobby(request,id):
         'hobbyRankList':hobbyRankList,
         'userschool_random':userschool_random,
         'usermajor_random':usermajor_random,
+        'user_exclude_random':user_exclude_random,
     }
         
     return render(request, 'myApp/topScreen.html', context=text) 
