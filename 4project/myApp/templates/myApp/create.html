@@ -46,10 +46,16 @@
 	  {{ add_account_form.birth.errors }}
 	</tr>
 	<tr>
+	  <td colspan="3" align="center" class="username_note">8桁の数字で記入してくだいさい。例 : 1999年1月1日生まれの場合→19990101</td>
+	</tr>
+	<tr>
 	  <td>{{ add_account_form.school_name.label }}</td>
 	  <td>{{ add_account_form.school_name }}</td>
 	  {{ add_account_form.school_name.errors }}
 	</tr>
+	<tr>
+	  <td colspan="3" align="center" class="username_note">〇〇大学まで記入してください。例 : ○東京大学　×東京</td>
+	  </tr>
 	<tr>
 	  <td>{{ add_account_form.school_major.label }}</td>
 	  <td colspan="2">{{ add_account_form.school_major }}</td>

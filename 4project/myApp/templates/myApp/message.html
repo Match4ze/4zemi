@@ -22,7 +22,7 @@
     <form action="{% url 'message' userinfo.id userinfo2.id %}" method="post"> 
       {% csrf_token %}
       {{ form.as_p }}
-      <input type="submit" class="btm btn-primary my-2" value="送信">
+      <input type="submit" class="btn-mess" value="送信">
     </form>
   </div>
 </div>

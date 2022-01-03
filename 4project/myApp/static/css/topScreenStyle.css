@@ -550,3 +550,35 @@ input[name="tab_item"] {
 .s-info {
     padding-left: 20px;
 }
+
+/* personal */
+.per-box{
+    width:550px;
+    display: inline-block;
+    text-align: left;
+}
+.per-down {
+    padding-bottom:0;
+    margin-bottom:0;
+}
+.per-p {
+    padding-left:20px;
+}
+/* message */
+.btn-mess {
+    border-radius: 0.5rem;
+    margin: 10px auto;
+    padding: 0.5rem 1rem;
+    border: none;
+    color: #000;
+    background-color: #b0c4de;
+    border-bottom: 5px solid #8d9eb3;
+}
+
+.btn-mess:hover {
+    margin-top: 13px;
+    color: #000;
+    background: #b0c4de;
+    border-bottom: 2px solid #8d9eb3;
+}
+
