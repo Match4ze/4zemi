@@ -19,6 +19,9 @@
         <div class="menu-content">
           <ul>
 	    <li>
+              <a href="{% url 'topScreen' user.id|add:"-1" %}">ホーム</a>
+            </li>
+	    <li>
               <a href="{% url 'Mypage' user.id|add:"-1" %}">マイページ</a>
             </li>
 	    <li>

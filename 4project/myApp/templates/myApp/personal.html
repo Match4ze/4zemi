@@ -7,7 +7,7 @@
     <div class="per-box">
       <p class="per-down">5段階評価</p>
       <p class="per-p">0:あてはまらない<br>1:ややあてはまらない<br>2:どちらともいえない<br>3:ややあてはまる<br>4:あてはまる</p>
-      <form action="{% url 'personal' userinfo.id %}" method="post"> 
+      <form action="{% url 'personal_add' userinfo.id %}" method="post"> 
 	{% csrf_token %}
 	<table>
 	  <p>初対面の人に会うのが好きで、初対面でも相手との会話を楽しむことができる</p>

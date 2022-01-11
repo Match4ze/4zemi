@@ -82,7 +82,7 @@ nav {
     height: 3px;
     width: 25px;
     border-radius: 3px;
-    background-color: #ffffff;
+    background-color: #f6828f;
     position: absolute;
 }
 .menu-btn span:before {
@@ -110,7 +110,7 @@ nav {
     padding: 70px 10px 0;
 }
 .menu-content ul li {
-    border-bottom: solid 1px #ffffff;
+    border-bottom: solid 1px #f6828f;
     list-style: none;
 }
 .menu-content ul li a {
@@ -118,7 +118,7 @@ nav {
     width: 100%;
     font-size: 15px;
     box-sizing: border-box;
-    color:#ffffff;
+    color:#f6828f;
     text-decoration: none;
     padding: 9px 15px 0px 20px;
     position: relative;
@@ -127,8 +127,8 @@ nav {
     content: "";
     width: 7px;
     height: 7px;
-    border-top: solid 2px #ffffff;
-    border-right: solid 2px #ffffff;
+    border-top: solid 2px #f6828f;
+    border-right: solid 2px #f6828f;
     transform: rotate(45deg);
     position: absolute;
     right: 11px;
@@ -243,7 +243,7 @@ input[name="tab_item"] {
 /*選択されているタブのスタイルを変える*/
 .tabs input:checked + .tab_item {
   background-color: #ffb3b3;
-  color: #fff;
+  color: #0d0015;
 }
 
 /* 大学 */
