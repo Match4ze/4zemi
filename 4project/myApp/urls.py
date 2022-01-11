@@ -17,6 +17,7 @@ urlpatterns = [
     path('<int:id>/Heart_list', views.Heart_list, name='Heart_list'),
      #性格診断
     path('<int:id>/personal', views.personal_view, name='personal'),
+    path('<int:id>/personal_add', views.personal_add, name='personal_add'),
     path('<int:id>/select', views.select, name='select'),
 
      #フレンド申請

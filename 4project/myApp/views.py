@@ -215,26 +215,41 @@ def personal_view(request,id):
     
     user = authenticate(username=user_username, password=user_pass)
     login(request, user)
-    
-    if request.method == 'POST':
-        pForm = personalForm(request.POST)
-        if pForm.is_valid():
-            if(question.objects.filter(user=userinfo).exists()):
-                question.objects.filter(user=userinfo).delete()
-            personalPost = pForm.save(commit=False)
-            personalPost.user = userinfo
-            personalPost.publish()
 
-    if(question.objects.filter(user=userinfo).exists()):
-        q = question.objects.filter(user=userinfo)
-        d = 4 - q[0].q6 + q[0].q1
-        c = 4 - q[0].q7 + q[0].q2
-        h = 4 - q[0].q8 + q[0].q3
-        n = 4 - q[0].q9 + q[0].q4
-        o = 4 - q[0].q10 + q[0].q5
-        if(personal.objects.filter(user=userinfo).exists()):
-            personal.objects.filter(user=userinfo).delete()
-        per = personal.objects.create(user=userinfo,diplomacy=d,cooperation=c,honesty=h,nerve=n,openness=o)
+    context = {
+        'title': '性格診断',
+        'form':personalForm(),
+        'result':None,
+        'userinfo':userinfo,
+        'user':user,
+    }
+    userQuestion = question.objects.filter(user=userinfo)
+
+    if userQuestion.exists():
+        userinfoQuestion = userQuestion[0]
+        show_question = personalForm(instance=userinfoQuestion)
+        params = {
+            'title': '性格診断',
+            'form':show_question,
+            'result':None,
+            'userinfo':userinfo,
+            'user':user,
+        }
+        return render(request, 'myApp/personal.html', context=params)
+    return render(request, 'myApp/personal.html', context)
+
+def personal_add(request,id):
+    userinfo = get_object_or_404(login, pk=id)
+    
+    global user_pass
+    user_pass = request.session['userpass']
+
+    global user_username
+    user_username = request.session['user_user_name']
+    
+    user = authenticate(username=user_username, password=user_pass)
+    login(request, user)
+
     params = {
         'title': '性格診断',
         'form':personalForm(),
@@ -242,7 +257,87 @@ def personal_view(request,id):
         'userinfo':userinfo,
         'user':user,
     }
-    return render(request, 'myApp/personal.html', params)
+    userQuestion = question.objects.filter(user=userinfo)
+    
+    if request.method == 'POST':
+        if userQuestion.exists():
+            userselectQuestion = userQuestion[0]
+            pForm = personalForm(request.POST, instance=userselectQuestion)
+
+            q = question.objects.filter(user=userinfo)
+            d = 4 - q[0].q6 + q[0].q1
+            c = 4 - q[0].q7 + q[0].q2
+            h = 4 - q[0].q8 + q[0].q3
+            n = 4 - q[0].q9 + q[0].q4
+            o = 4 - q[0].q10 + q[0].q5
+
+            if(personal.objects.filter(user=userinfo).exists()):
+                personal.objects.filter(user=userinfo).delete()
+            per = personal.objects.create(user=userinfo,diplomacy=d,cooperation=c,honesty=h,nerve=n,openness=o)
+
+            context = {
+                'title': '性格診断',
+                'form':userselectQuestion,
+                'result':None,
+                'userinfo':userinfo,
+                'user':user,
+            }
+            
+            if pForm.is_valid():
+                pForm.save()
+
+            else:
+                print(pForm.errors)
+                return(request, 'myApp/personal.html', context)
+
+        else:
+            params["pForm"] = personalForm(request.POST)
+
+            if params["pForm"].is_valid():
+                personalPost = params["pForm"].save(commit=False)
+                personalPost.user = userinfo
+                personalPost.save()
+                q = question.objects.filter(user=userinfo)
+                d = 4 - q[0].q6 + q[0].q1
+                c = 4 - q[0].q7 + q[0].q2
+                h = 4 - q[0].q8 + q[0].q3
+                n = 4 - q[0].q9 + q[0].q4
+                o = 4 - q[0].q10 + q[0].q5
+                if(personal.objects.filter(user=userinfo).exists()):
+                    personal.objects.filter(user=userinfo).delete()
+                per = personal.objects.create(user=userinfo,diplomacy=d,cooperation=c,honesty=h,nerve=n,openness=o)
+
+            else:
+                print(params["pForm"].errors)
+                return(request, 'myApp/personal.html',params)
+
+    alluser = login.objects.all()
+    user_exclude = login.objects.exclude(id=userinfo.id)
+
+    #ランダム
+    user_exclude_random = user_exclude.order_by('?')[:10]
+    
+    userschool = user_exclude.filter(school_name=userinfo.school_name)
+    userschool_random = userschool.order_by('?')[:10]
+    
+    usermajor = user_exclude.filter(school_major=userinfo.school_major)
+    usermajor_random = usermajor.order_by('?')[:10]
+
+    #趣味表示
+    hobbyRankList = rankHobby(request ,id)
+    
+    text = {
+        'userinfo':userinfo,
+        'user':user,
+        'alluser':alluser,
+        'hobbyRankList':hobbyRankList,
+        'userschool_random':userschool_random,
+        'usermajor_random':usermajor_random,
+        'user_exclude_random':user_exclude_random,
+    }
+    return render(request, 'myApp/topScreen.html', context=text)
+    
+    
 
 #ユーザ情報を辞書に格納して、users.htmlに返す
 def showUsers(request):
